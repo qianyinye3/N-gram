@@ -1,0 +1,44 @@
+import codecs
+import re
+from collections import Counter
+
+f1 = codecs.open('words1.txt','r', encoding='utf-8',errors = "ignore") #previous thesaurus
+nonword={}
+for line in f1.readlines():
+    line = line.strip('\ufeff')
+    line = line.strip('\r\n')
+    nonword[line]={}
+f1.close()
+print(len(nonword))
+
+f2 = codecs.open('words2.txt','r', encoding='utf-8',errors = "ignore") #previous thesaurus
+words={}
+for line in f2.readlines():
+    line = line.strip('\ufeff')
+    line = line.strip('\r\n')
+    words[line]={}   
+f2.close()
+print(len(words))
+cutword = dict( nonword, **words)
+print(len(cutword))
+
+
+f = codecs.open('all_platform_n2.txt','r', encoding='utf-8',errors = "ignore")
+adict={}
+for line in f.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    if line[0] not in cutword.keys():
+        adict[line[0]]= int(line[1])
+
+adict = sorted(adict.items(),key=lambda item:item[1],reverse=True) #sorting
+wordcount = len(adict)
+with open('all_platform_cutword.txt','w', encoding ='utf-8') as f:
+    for i in adict:
+        f.write(i[0] + '\t' +str(i[1])+'\n')
+
+import csv
+csvFile = open('all_platform_cutword.csv','a',newline='\n')
+writer = csv.writer(csvFile)      
+writer.writerow(["n=2",wordcount])
+csvFile.close() 
