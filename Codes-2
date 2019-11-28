@@ -1,0 +1,140 @@
+import codecs
+import re
+from collections import Counter
+f1 = codecs.open('1_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict1={}
+for line in f1.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict1[line[0]]=int(line[1])  
+
+f2 = codecs.open('2_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict2={}
+for line in f2.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict2[line[0]]=int(line[1])
+
+X,Y = Counter(dict1), Counter(dict2)
+dicta = dict(X+Y)
+print([i for i in dicta.keys()][:5])
+print([i for i in dicta.values()][:5])
+f1.close()
+f2.close()
+####################################################
+f3 = codecs.open('3_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict3={}
+for line in f3.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict3[line[0]]=int(line[1])  
+
+X,Y = Counter(dicta), Counter(dict3)
+dictb = dict(X+Y)
+print([i for i in dictb.keys()][:5])
+print([i for i in dictb.values()][:5])
+f3.close()
+#######################################################
+f4 = codecs.open('4_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict4={}
+for line in f4.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict4[line[0]]=int(line[1])
+
+X,Y = Counter(dictb), Counter(dict4)
+dictc = dict(X+Y)
+print([i for i in dictc.keys()][:5])
+print([i for i in dictc.values()][:5])
+f4.close()
+########################################################
+f5 = codecs.open('5_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict5={}
+for line in f5.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict5[line[0]]=int(line[1])
+
+X,Y = Counter(dictc), Counter(dict5)
+dictd = dict(X+Y)
+print([i for i in dictd.keys()][:5])
+print([i for i in dictd.values()][:5])
+f5.close()
+#########################################################
+f6 = codecs.open('6_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict6={}
+for line in f6.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict6[line[0]]=int(line[1])
+
+X,Y = Counter(dictd), Counter(dict6)
+dicte = dict(X+Y)
+print([i for i in dicte.keys()][:5])
+print([i for i in dicte.values()][:5])
+f6.close()
+############################################################
+f7 = codecs.open('7_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict7={}
+for line in f7.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict7[line[0]]=int(line[1])
+
+X,Y = Counter(dicte), Counter(dict7)
+dictf = dict(X+Y)
+print([i for i in dictf.keys()][:5])
+print([i for i in dictf.values()][:5])
+f7.close()
+############################################################
+f8 = codecs.open('8_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict8={}
+for line in f8.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict8[line[0]]=int(line[1])
+
+X,Y = Counter(dictf), Counter(dict8)
+dictg = dict(X+Y)
+print([i for i in dictg.keys()][:5])
+print([i for i in dictg.values()][:5])
+f8.close()
+############################################################
+f9 = codecs.open('9_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict9={}
+for line in f9.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict9[line[0]]=int(line[1])
+
+X,Y = Counter(dictg), Counter(dict9)
+dicth = dict(X+Y)
+print([i for i in dicth.keys()][:5])
+print([i for i in dicth.values()][:5])
+f9.close()
+############################################################
+f10 = codecs.open('10_n2.txt','r', encoding='utf-8',errors = "ignore")
+dict10={}
+for line in f10.readlines('\n'):
+    line = line.strip('\n')
+    line = line.split('\t')
+    dict10[line[0]]=int(line[1])
+
+X,Y = Counter(dicth), Counter(dict10)
+dictall = dict(X+Y)
+print([i for i in dictall.keys()][:5])
+print([i for i in dictall.values()][:5])
+f10.close()
+
+dictall = sorted(dictall.items(),key=lambda item:item[1],reverse=True) 
+wordcount = len(dictall)
+print(wordcount)
+with open('all_platform_n2.txt','w', encoding ='utf-8') as f:
+    for i in dictall:
+        f.write(i[0] + '\t' +str(i[1])+'\n')
+
+import csv
+csvFile = open('all_platfrom_wordcount.csv','a',newline='\n')
+writer = csv.writer(csvFile)      
+writer.writerow(["n=2",wordcount])
+csvFile.close()   
