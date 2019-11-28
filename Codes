@@ -1,0 +1,41 @@
+import codecs
+import re
+import os
+import csv
+
+
+n=2####change
+root = r'/home/n-gram/platform/222'#Read the path of the folder where the txt waiting for batch processing
+file_names = os.listdir(root) #Read all txt file names in the folder
+file_ob_list = []  
+for file_name in file_names:  #Cyclically add the path in front of the file name to get its specific path
+    fileob = root + '/' + file_name 
+    file_ob_list.append(fileob) #Append path to list for storage 
+print(file_ob_list) 
+
+wdict = {}
+for fileob in file_ob_list: 
+    fh_msg = codecs.open(fileob,'r', encoding='utf-8',errors = "ignore").readlines() ##change    
+    for line in fh_msg:
+        clean1 = re.sub(r'[^\u4e00-\u9fa5]','',line)
+        clean = re.sub(r'年月日','',clean1)
+        for i in range(len(clean)):
+            word = clean[i:i+n]
+            if word in wdict:
+                count = wdict[word]
+            else:
+                count=0
+            count = count + 1
+            wdict[word]=count
+    
+wdict = sorted(wdict.items(),key=lambda item:item[1],reverse=True)
+wordcount = len(wdict)
+with open('lihkg_n2.txt','w', encoding ='utf-8') as f:
+    for i in wdict:
+        f.write(i[0] + '\t' +str(i[1])+'\n')
+
+
+csvFile = open('wordcount_n2.csv','a',newline='\n')
+writer = csv.writer(csvFile)      
+writer.writerow(["lihkg",wordcount])
+csvFile.close() 
